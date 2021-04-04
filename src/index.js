@@ -4,9 +4,25 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+import {MainContextProvider} from './contexts/Main.context';
+import { 
+  BrowserRouter as Router,
+} from 'react-router-dom';
+import {AppProvider} from '@shopify/polaris';
+import en from '@shopify/polaris/locales/en.json';
+import '@shopify/polaris/dist/styles.css'
+
+
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <MainContextProvider>
+      <AppProvider i18n={en}>
+        <Router>
+            <App />
+        </Router>
+      </AppProvider>
+    </MainContextProvider>
+    
   </React.StrictMode>,
   document.getElementById('root')
 );
