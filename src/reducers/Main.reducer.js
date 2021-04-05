@@ -8,7 +8,7 @@ export function reducer(state, {type,payload}) {
       case CREATE_USER:
         const {full_name,adress, email, phone} = payload;
         let users = [...state] 
-        users.push({full_name,adress, email, phone});
+        users.unshift({full_name,adress, email, phone});
         return [
           ...users
         ];

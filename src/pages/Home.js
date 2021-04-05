@@ -3,7 +3,9 @@ import PropTypes from 'prop-types';
 import {MainContext} from './../contexts/Main.context';
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import {Button} from '@shopify/polaris';
+import {Button,
+    Heading
+} from '@shopify/polaris';
 
 
 function Home(props) {
@@ -11,11 +13,11 @@ function Home(props) {
     console.log(context);
     return (
         <div>
-            <p>Welcome to HomePage</p>
+            <Heading>Welcome to HomePage</Heading>
             <Button
             primary={true}
             >
-                <Link to = '/SignUp' >aaaaaaa</Link>
+                <Link to = '/SignUp' >Sign Up</Link>
             </Button>
         </div>
     )
