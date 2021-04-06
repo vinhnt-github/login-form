@@ -14,7 +14,6 @@ import { useState,useCallback,useContext,useRef } from 'react';
 import {MainContext} from './../contexts/Main.context';
 import styled from 'styled-components'
 
-// import ReCAPTCHA from "react-google-recaptcha";
 import ReCAPTCHA from "react-grecaptcha";
 
 import { Link } from 'react-router-dom';
@@ -32,11 +31,59 @@ function SignUp(props) {
     const [email, setEmail] = useState();
     const [phoneNumber, setPhoneNumber] = useState();
 
-    const recaptchaRef = useRef(false);
 
-    // useEffect(() => {
-    //   // refCapcha = false;
-    // }, [])
+    const [errors, setErrors] = useState({});
+
+
+
+    function validateForm() {
+
+      let errors = {};
+      let formIsValid = true;
+
+      if (!fullName) {
+        formIsValid = false;
+        errors["name"] = "Please enter your username.";
+      }
+
+      if (typeof fullName !== "undefined") {
+        if (!fullName.match(/^[a-zA-Z ]*$/)) {
+          formIsValid = false;
+          errors["name"] = "Please enter alphabet characters only.";
+        }
+      }
+      if (!adress) {
+        formIsValid = false;
+        errors["adress"] = "Please enter your adress.";
+      }
+
+      if (!email) {
+        formIsValid = false;
+        errors["emaill"] = "Please enter your email.";
+      }
+      if (!phoneNumber) {
+        formIsValid = false;
+        errors["phoneNumber"] = "Please enter your mobile no.";
+      }
+
+      if (typeof phoneNumber !== "undefined") {
+        if (!phoneNumber.match(/^[0-9]{10}$/)) {
+          formIsValid = false;
+          errors["phoneNumber"] = "Please enter valid mobile no.";
+        }
+      }
+
+
+      setErrors({
+        ...errors
+      })
+      return formIsValid;
+
+
+    }
+
+
+    const recaptchaRef = useRef(false);
   
     const handleChangeName = useCallback((value) =>{setFullName(value)}, [fullName]);
     const handleChangeAdress = useCallback((value) =>{setAdress(value)}, [adress]);
@@ -52,7 +99,7 @@ function SignUp(props) {
       recaptchaRef.current.reset();
     };
     const handleSubmit = useCallback((_event) => {
-      if(!fullName||!adress||!email||!phoneNumber||!recaptchaRef.current){
+      if(!validateForm()||!recaptchaRef.current){
         return;
       }
       addUser({
@@ -71,10 +118,10 @@ function SignUp(props) {
             <Form onSubmit={handleSubmit}>
               <DisplayText size="large">Registration form</DisplayText>
              <FormLayout>
-               <TextField label="Full name" value={fullName} onChange={handleChangeName} error={fullName ? "" : "Name is required"}/>
-               <TextField type="text" label="Adress" value={adress} onChange={handleChangeAdress} error={adress ? "" : "Name is required"}/>
-               <TextField type="email" label="Email" value={email} placeholder = "ex: myname@example.com" onChange={handleChangeEmail} error={email ? "" : "Name is required"}/>
-               <TextField label="Phone number" value={phoneNumber} onChange={handleChangePhone} error={phoneNumber ? "" : "Name is required"}/>
+               <TextField label="Full name" value={fullName} onChange={handleChangeName} error={errors.name}/>
+               <TextField type="text" label="Adress" value={adress} onChange={handleChangeAdress} error={errors.adress}/>
+               <TextField type="email" label="Email" value={email} placeholder = "ex: myname@example.com" onChange={handleChangeEmail} error={errors.emaill}/>
+               <TextField type="text" label="Phone number" value={phoneNumber} onChange={handleChangePhone} error={phoneNumber ? "" : "Phone Number is required"} error={errors.phoneNumber}/>
 
                <ReCAPTCHA
                 ref = {()=>callback()}
