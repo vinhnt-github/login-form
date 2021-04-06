@@ -7,7 +7,7 @@ import {
  import defaultImage from './../assets/images/default-avatar.png'
 
 
-const users = [
+let innitial_user = [
     {
         // id: UUID.v4,
         full_name: 'Nguyen Van A',
@@ -113,7 +113,13 @@ const users = [
 export const MainContext = React.createContext();
 
 export function MainContextProvider({children}) {
-    const [state, dispatch] = useReducer(reducer, users)
+    useEffect(() => {
+        if(!localStorage.getItem('user')){
+            console.log('aaaaaa');
+            localStorage.setItem('user',JSON.stringify(innitial_user));
+        }
+    }, [])
+    const [state, dispatch] = useReducer(reducer,localStorage.getItem('user')?JSON.parse(localStorage.getItem('user')):innitial_user)
 
     const addUser = (newUser)=> {
         dispatch({

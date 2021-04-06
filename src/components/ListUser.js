@@ -20,6 +20,8 @@ function ListUser(props) {
     const {state} = useContext(MainContext);
     let userShow = []
 
+    const totalPage = Math.ceil(state.length/itemShowNumber);
+    console.log(totalPage);
     const [activePage,setActivePage] = useState(1);
     const [itemShow,setItemShow] = useState({
         min : 0,
@@ -72,16 +74,28 @@ function ListUser(props) {
                     }}
                 />
             </Card>
-            <Pagination
-                hasPrevious = {itemShow.min >= itemShowNumber ? true:false}
-                previousKeys={[74]}
-                previousTooltip="Prev"
-                onPrevious={onPrevious}
-                hasNext = {itemShow.max < state.length ? true:false}
-                nextKeys={[75]}
-                nextTooltip="Next"
-                onNext={onNext}
-            />
+            <PaginationWrap>
+                
+                <Pagination
+                    hasPrevious = {activePage > 1 ? true:false}
+                    previousKeys={[74]}
+                    previousTooltip="Prev"
+                    onPrevious={onPrevious}
+                    hasNext = {activePage < totalPage}
+                    nextKeys={[75]}
+                    nextTooltip="Next"
+                    onNext={onNext}
+                />
+                <p className = "sub-title">
+                    Show
+                    <TextStyle variation="positive">{activePage}</TextStyle>
+                    of
+                    <TextStyle variation="positive">{totalPage}</TextStyle>
+                </p>
+            </PaginationWrap>
+            
+            
+            
         </ListUserWrap>
     )
 }
@@ -92,6 +106,18 @@ ListUser.propTypes = {
 
 const ListUserWrap = styled.div`
 
+`
+const PaginationWrap = styled.div`
+    display: flex;
+    align-items: center;
+    margin-top: 15px;
+    padding-left: 5px;
+    .sub-title{
+        margin-left: 15px;
+        span{
+            padding: 3px;
+        }
+    }
 `
 
 export default ListUser

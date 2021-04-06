@@ -10,7 +10,6 @@ import {Button,
 
 function Home(props) {
     const context = React.useContext(MainContext);
-    console.log(context);
     return (
         <div>
             <Heading>Welcome to HomePage</Heading>

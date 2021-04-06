@@ -9,13 +9,13 @@ import {
  
 
 const router = [
+    // {
+    //     path : '/',
+    //     exact: true,
+    //     component : Home
+    // },
     {
         path : '/',
-        exact: true,
-        component : Home
-    },
-    {
-        path : '/SignUp',
         exact: true,
         component : SignUp
     },
