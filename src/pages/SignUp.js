@@ -19,8 +19,6 @@ import ReCAPTCHA from "react-grecaptcha";
 import { Link } from 'react-router-dom';
 import {API_KEY_CAPCHA} from '../apiKey/API.key'
 
-import { Adress } from '../apiKey/Adress';
-
 
 function SignUp(props) {
     const {state,addUser} = useContext(MainContext);
